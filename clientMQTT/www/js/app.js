@@ -21,7 +21,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       StatusBar.styleDefault();
     }
 
-     $document.addEventListener("ebtest",function(e){
+      document.addEventListener("ebtest",function(e){
         console.log('MQTT message from topic ebtest');
         console.log(e.payload);
        },false)
