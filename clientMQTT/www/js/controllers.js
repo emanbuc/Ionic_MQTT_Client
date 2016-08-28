@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope,mqttclient) {
+.controller('DashCtrl', function($scope,mqttclient,$ionicPopup) {
 
   $scope.connect= function(){
     cordova.plugins.CordovaMqTTPlugin.connect({
@@ -19,12 +19,24 @@ angular.module('starter.controllers', [])
           keepAlive:60,
           success:function(s){
               console.log("connect success");
+                 var alertPopup = $ionicPopup.alert({
+                   title: 'success',
+                   template: 'client connected'
+                 });
           },
           error:function(e){
-              console.log("connect error");
+              console.log("connect error",e);
+               var alertPopup = $ionicPopup.alert({
+                 title: 'error',
+                 template: 'connection error'
+               });
           },
           onConnectionLost:function (){
               console.log("disconnect");
+              var alertPopup = $ionicPopup.alert({
+                 title: 'error',
+                 template: 'conneciton lost'
+               });
           }
       })
   };
@@ -36,10 +48,16 @@ $scope.publish= function(){
          qos:0,
          retain:false,
         success:function(s){
-       
+              var alertPopup = $ionicPopup.alert({
+                 title: 'success',
+                 template: 'message sent'
+               });
         },
         error:function(e){
-        
+              var alertPopup = $ionicPopup.alert({
+                 title: 'error',
+                 template: 'message publication failed'
+               });
         }
     })
 };
@@ -49,10 +67,17 @@ $scope.subscribe=function(){
        topic:"ebtest",
        qos:0,
       success:function(s){
+              var alertPopup = $ionicPopup.alert({
+                 title: 'success',
+                 template: 'this device is now subscribed to ebtest topic'
+               });
      
       },
       error:function(e){
-      
+              var alertPopup = $ionicPopup.alert({
+                 title: 'error',
+                 template: 'subscription failed'
+               });
       }
     });
 };
@@ -60,10 +85,16 @@ $scope.subscribe=function(){
 $scope.disconnect = function(){
   cordova.plugins.CordovaMqTTPlugin.disconnect({
   success:function(s){
- 
+                var alertPopup = $ionicPopup.alert({
+                 title: 'success',
+                 template: 'client disconnected'
+               }); 
   },
   error:function(e){
-  
+                var alertPopup = $ionicPopup.alert({
+                 title: 'error',
+                 template: 'error while disconnecting'
+               });
   }
 })
 }
